@@ -1,25 +1,36 @@
 const router = require('express').Router();
 const { Product, Category, Tag, ProductTag } = require('../../models');
+const { afterBulkSync } = require('../../models/Product');
 
 // The `/api/products` endpoint
 
 // get all products
 router.get('/', async (req, res) => {
-    let data = await Product.findAll({
-        include: [{ model: Category }, { model: Tag }],
-    })
-    res.status(200).json(data);
+    try {
+        let data = await Product.findAll({
+            include: [{ model: Category }, { model: Tag }],
+        })
+        res.status(200).json(data);
+    }
+    catch (err) {
+        res.json(err)
+    }
 });
 
 // get one product
 router.get('/:id', async (req, res) => {
-    let data = await Product.findOne({
-        where: {
-            id: req.params.id
-        },
-        include: [{ model: Category }, { model: Tag }],
-    })
-    res.status(200).json(data);
+    try {
+        let data = await Product.findOne({
+            where: {
+                id: req.params.id
+            },
+            include: [{ model: Category }, { model: Tag }],
+        })
+        res.status(200).json(data);
+    }
+    catch (err) {
+        res.json(err)
+    }
 });
 
 // create new product
@@ -89,20 +100,30 @@ router.put('/:id', (req, res) => {
                 ProductTag.bulkCreate(newProductTags),
             ]);
         })
-        .then((updatedProductTags) => res.json(updatedProductTags))
+        .then((updatedProductTags) => res.status(200).json(updatedProductTags))
         .catch((err) => {
             // console.log(err);
-            res.status(400).json(err);
+            res.status(200).json(err);
         });
 });
 
 router.delete('/:id', async (req, res) => {
-    await Product.destroy({
-        where: {
-            id: req.params.id,
-        },
-    })
-    res.status(200).json("Product deleted")
+    try {
+        data = await Product.destroy({
+            where: {
+                id: req.params.id,
+            },
+        })
+
+        if (!data) {
+            return res.status(404).json("Invalid Field");
+        }
+
+        res.status(200).json("Product deleted")
+    }
+    catch (err) {
+        res.json(err)
+    }
 });
 
 module.exports = router;
