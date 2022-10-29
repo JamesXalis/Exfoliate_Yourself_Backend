@@ -8,9 +8,6 @@ ProductTag.init(
     {
         product_id: {
             type: DataTypes.INTEGER,
-            validate:{
-                isDecimal: true,
-            },
             refreneces:{
                 model: 'product',
                 key: 'id',
@@ -18,9 +15,6 @@ ProductTag.init(
         },
         tag_id: {
             type: DataTypes.INTEGER,
-            validate:{
-                isDecimal: true,
-            },
             refreneces:{
                 model: 'tag',
                 key: 'id',

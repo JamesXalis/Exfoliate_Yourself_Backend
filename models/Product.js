@@ -27,7 +27,7 @@ Product.init(
         category_id:{
             type: DataTypes.INTEGER,
             validate: {
-                isDecimal:true,
+                isNumeric: true,
             }
         },
         refreneces:{
