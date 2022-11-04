@@ -27,8 +27,6 @@ This application will eventually host a much more expansive suite of database mo
 
 ## Screenshot
 
-### Sample View of Fetch Call via Insomnia
-![Sample Fetch]
 
 ---
 
