@@ -19,5 +19,5 @@ Tag.init(
         modelName: 'tag',
     }
 );
-//test
+
 module.exports = Tag;
